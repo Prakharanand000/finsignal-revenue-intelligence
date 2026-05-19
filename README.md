@@ -1,4 +1,4 @@
-# FinSignal — Quarterly Revenue Intelligence Platform
+# FinSignal - Quarterly Revenue Intelligence Platform
 
 [GitHub](https://github.com/Prakharanand000/finsignal-revenue-intelligence) | [Live App](https://finsignal-revenue-intelligence.streamlit.app/)
 
