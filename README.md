@@ -1,5 +1,7 @@
 # FinSignal — Quarterly Revenue Intelligence Platform
 
+[GitHub](https://github.com/Prakharanand000/finsignal-revenue-intelligence) | [Live App](https://app.snowflake.com/us-east-1/uoc61675/#/streamlit-apps/FINSIGNAL.GOLD.FINSIGNAL_DASHBOARD)
+
 > **Built with Snowflake Cortex Code | dbt | Streamlit | Cortex Analyst**
 > A production-grade Snowflake-native finance analytics platform simulating the quarterly revenue intelligence stack a Strategic Finance team actually runs.
 
@@ -176,9 +178,3 @@ dbt run  — PASS=9 (4 staging views + 5 gold tables)
 dbt test — PASS=20, WARN=0, ERROR=0, SKIP=0
 ```
 
----
-
-## Resume Bullet
-
-> **FinSignal — Quarterly Revenue Intelligence Platform** | [GitHub](https://github.com/Prakharanand000/finsignal-revenue-intelligence) | [Live App](https://app.snowflake.com/us-east-1/uoc61675/#/streamlit-apps/FINSIGNAL.GOLD.FINSIGNAL_DASHBOARD)
-> Built a Snowflake-native finance analytics platform using Cortex Code as primary dev tool (~30 logged sessions); modeled ARR movements, NRR cohorts, and revenue waterfall in dbt (5 gold models, 20+ schema tests); caught and fixed ARR misclassification bug (14,277 false events → 159 real tier changes); shipped a Cortex Analyst semantic layer, 3-page Streamlit dashboard deployed to Snowflake, and an automated fiscal quarter-close routine emitting a 4-tab IR-style Excel export for FY2026-Q3.
