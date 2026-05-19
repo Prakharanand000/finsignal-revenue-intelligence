@@ -6,7 +6,11 @@
 > A production-grade Snowflake-native finance analytics platform simulating the quarterly revenue intelligence stack a Strategic Finance team actually runs.
 
 **Live App:** `https://app.snowflake.com/us-east-1/uoc61675/#/streamlit-apps/FINSIGNAL.GOLD.FINSIGNAL_DASHBOARD`
+
+`https://finsignal-revenue-intelligence.streamlit.app/`
+
 **Cortex Code sessions:** ~30 logged sessions, built in a single day (2026-05-18)
+
 **See:** [`cortex_session_log.md`](./cortex_session_log.md) for session-by-session evidence
 
 ---
