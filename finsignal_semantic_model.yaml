@@ -1,0 +1,129 @@
+name: finsignal_revenue
+description: "Northwind Cloud B2B SaaS revenue analytics — ARR movements, waterfall, and net revenue retention."
+
+tables:
+  - name: revenue_waterfall
+    description: "Quarterly ARR bridge showing beginning ARR, movements, and ending ARR"
+    base_table:
+      database: FINSIGNAL
+      schema: GOLD
+      table: FCT_REVENUE_WATERFALL
+    dimensions:
+      - name: fiscal_quarter
+        synonyms: ["quarter", "period", "FQ"]
+        description: "Fiscal quarter label e.g. FY2026-Q3"
+        expr: FISCAL_QUARTER
+        data_type: VARCHAR
+        unique: true
+        is_enum: true
+    facts:
+      - name: beginning_arr
+        synonyms: ["starting ARR", "opening ARR"]
+        description: "ARR at the start of the fiscal quarter"
+        expr: BEGINNING_ARR
+        data_type: NUMBER
+      - name: ending_arr
+        synonyms: ["final ARR", "closing ARR", "total ARR", "ARR"]
+        description: "ARR at the end of the fiscal quarter"
+        expr: ENDING_ARR
+        data_type: NUMBER
+      - name: net_new_arr
+        synonyms: ["growth", "net ARR change", "net new"]
+        description: "Net new ARR added during the quarter"
+        expr: NET_NEW_ARR
+        data_type: NUMBER
+      - name: new_arr
+        synonyms: ["new logo ARR", "new business", "bookings"]
+        description: "ARR from new customers acquired this quarter"
+        expr: NEW_ARR
+        data_type: NUMBER
+      - name: expansion_arr
+        synonyms: ["upsell ARR", "upgrade ARR", "expansion"]
+        description: "ARR gained from tier upgrades"
+        expr: EXPANSION_ARR
+        data_type: NUMBER
+      - name: contraction_arr
+        synonyms: ["downsell ARR", "downgrade ARR", "contraction"]
+        description: "ARR lost from tier downgrades (negative value)"
+        expr: CONTRACTION_ARR
+        data_type: NUMBER
+      - name: churn_arr
+        synonyms: ["churn", "lost ARR", "churned ARR", "lost revenue"]
+        description: "ARR lost from customers who cancelled (negative value)"
+        expr: CHURN_ARR
+        data_type: NUMBER
+      - name: qoq_growth_pct
+        synonyms: ["quarter over quarter growth", "QoQ growth", "growth rate"]
+        description: "Quarter-over-quarter ARR growth percentage"
+        expr: QOQ_GROWTH_PCT
+        data_type: NUMBER
+    metrics:
+      - name: ending_arr_metric
+        synonyms: ["total ARR", "ARR"]
+        description: "Ending ARR for the quarter"
+        expr: SUM(ENDING_ARR)
+      - name: net_new_arr_metric
+        synonyms: ["growth", "net new"]
+        description: "Net new ARR for the quarter"
+        expr: SUM(NET_NEW_ARR)
+      - name: churn_arr_metric
+        synonyms: ["churn", "lost revenue"]
+        description: "Total churn ARR (negative)"
+        expr: SUM(CHURN_ARR)
+      - name: expansion_arr_metric
+        synonyms: ["expansion", "upsell"]
+        description: "Total expansion ARR"
+        expr: SUM(EXPANSION_ARR)
+
+  - name: nrr_cohorts
+    description: "Net revenue retention by signup cohort quarter"
+    base_table:
+      database: FINSIGNAL
+      schema: GOLD
+      table: FCT_NRR_COHORTS
+    dimensions:
+      - name: cohort_quarter
+        synonyms: ["cohort", "signup quarter"]
+        description: "The fiscal quarter when the cohort signed up"
+        expr: COHORT_QUARTER
+        data_type: VARCHAR
+        is_enum: true
+      - name: fiscal_quarter
+        synonyms: ["measurement quarter", "period"]
+        description: "The fiscal quarter being measured"
+        expr: FISCAL_QUARTER
+        data_type: VARCHAR
+        is_enum: true
+    facts:
+      - name: nrr_pct
+        synonyms: ["retention", "NRR", "net revenue retention"]
+        description: "Net revenue retention percentage (current/starting * 100)"
+        expr: NRR_PCT
+        data_type: NUMBER
+    metrics:
+      - name: avg_nrr_pct
+        synonyms: ["retention", "NRR", "average retention"]
+        description: "Average NRR percentage across cohorts for a given quarter"
+        expr: AVG(NRR_PCT)
+
+verified_queries:
+  - name: bad_quarter_waterfall
+    question: "What was the ARR waterfall for the bad quarter FY2026-Q3?"
+    sql: |
+      SELECT * FROM FINSIGNAL.GOLD.FCT_REVENUE_WATERFALL
+      WHERE FISCAL_QUARTER = 'FY2026-Q3'
+    use_as_onboarding_question: true
+  - name: quarterly_growth
+    question: "What is the quarter-over-quarter ARR growth trend?"
+    sql: |
+      SELECT FISCAL_QUARTER, ENDING_ARR, NET_NEW_ARR, QOQ_GROWTH_PCT
+      FROM FINSIGNAL.GOLD.FCT_REVENUE_WATERFALL
+      ORDER BY FISCAL_QUARTER
+    use_as_onboarding_question: true
+  - name: nrr_by_cohort
+    question: "What is the net revenue retention by cohort?"
+    sql: |
+      SELECT COHORT_QUARTER, FISCAL_QUARTER, NRR_PCT
+      FROM FINSIGNAL.GOLD.FCT_NRR_COHORTS
+      ORDER BY COHORT_QUARTER, FISCAL_QUARTER
+    use_as_onboarding_question: true

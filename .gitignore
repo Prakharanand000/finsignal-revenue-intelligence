@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+.venv/
+env/
+
+# dbt
+finsignal_dbt/target/
+finsignal_dbt/dbt_packages/
+finsignal_dbt/logs/
+
+# Snowflake credentials (never commit)
+finsignal_dbt/profiles.yml
+
+# Jupyter / Snowflake notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Output files
+/tmp/
+*.xlsx

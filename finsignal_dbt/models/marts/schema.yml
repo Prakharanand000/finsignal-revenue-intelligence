@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: dim_fiscal_calendar
+    columns:
+      - name: MONTH_DATE
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_customers
+    columns:
+      - name: CUSTOMER_ID
+        tests:
+          - not_null
+          - unique
+
+  - name: fct_arr_movements
+    columns:
+      - name: CUSTOMER_ID
+        tests:
+          - not_null
+      - name: MONTH
+        tests:
+          - not_null
+      - name: MOVEMENT_TYPE
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['new', 'reactivation', 'expansion', 'contraction', 'churn']
+
+  - name: fct_revenue_waterfall
+    columns:
+      - name: FISCAL_QUARTER
+        tests:
+          - not_null
+          - unique
+
+  - name: fct_nrr_cohorts
+    columns:
+      - name: COHORT_QUARTER
+        tests:
+          - not_null
+      - name: FISCAL_QUARTER
+        tests:
+          - not_null

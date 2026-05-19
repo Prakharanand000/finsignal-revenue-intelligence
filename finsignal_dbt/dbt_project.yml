@@ -1,0 +1,14 @@
+name: 'finsignal_dbt'
+version: '1.0.0'
+profile: 'finsignal_dbt'
+
+model-paths: ["models"]
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  finsignal_dbt:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table
+      +schema: GOLD

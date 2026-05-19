@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: bronze
+    database: FINSIGNAL
+    schema: BRONZE
+    tables:
+      - name: RAW_CUSTOMERS
+      - name: RAW_SUBSCRIPTIONS
+      - name: RAW_INVOICES
+      - name: RAW_USAGE_EVENTS
