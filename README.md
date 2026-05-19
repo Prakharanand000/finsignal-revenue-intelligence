@@ -1,6 +1,6 @@
 # FinSignal — Quarterly Revenue Intelligence Platform
 
-[GitHub](https://github.com/Prakharanand000/finsignal-revenue-intelligence) | [Live App](https://app.snowflake.com/us-east-1/uoc61675/#/streamlit-apps/FINSIGNAL.GOLD.FINSIGNAL_DASHBOARD)
+[GitHub](https://github.com/Prakharanand000/finsignal-revenue-intelligence) | [Live App](https://finsignal-revenue-intelligence.streamlit.app/)
 
 > **Built with Snowflake Cortex Code | dbt | Streamlit | Cortex Analyst**
 > A production-grade Snowflake-native finance analytics platform simulating the quarterly revenue intelligence stack a Strategic Finance team actually runs.
