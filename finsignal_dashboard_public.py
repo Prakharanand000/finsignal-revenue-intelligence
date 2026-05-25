@@ -7,6 +7,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import snowflake.connector
+from cryptography.hazmat.primitives.serialization import load_pem_private_key, Encoding, PrivateFormat, NoEncryption
 
 st.set_page_config(
     page_title="FinSignal — Revenue Intelligence",
@@ -46,14 +47,18 @@ st.markdown("""
 # ── Connection ────────────────────────────────────────────────────────────────
 @st.cache_resource
 def get_conn():
+    sf = st.secrets["snowflake"]
+    private_key = load_pem_private_key(
+        sf["private_key"].encode(), password=None
+    ).private_bytes(Encoding.DER, PrivateFormat.PKCS8, NoEncryption())
     return snowflake.connector.connect(
-        account   = st.secrets["snowflake"]["account"],
-        user      = st.secrets["snowflake"]["user"],
-        password  = st.secrets["snowflake"]["password"],
-        warehouse = st.secrets["snowflake"]["warehouse"],
-        database  = st.secrets["snowflake"]["database"],
-        schema    = st.secrets["snowflake"]["schema"],
-        role      = st.secrets["snowflake"]["role"],
+        account   = sf["account"],
+        user      = sf["user"],
+        private_key = private_key,
+        warehouse = sf["warehouse"],
+        database  = sf["database"],
+        schema    = sf["schema"],
+        role      = sf["role"],
     )
 
 @st.cache_data(ttl=300)
